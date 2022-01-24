@@ -1,0 +1,9 @@
+.fas.fa-scroll:after {
+  position: absolute;
+  content: "/";
+  color: red;
+  font-weight: 700;
+  font-size: 1.7em;
+  left: 7px;
+  top: -10px;
+}
