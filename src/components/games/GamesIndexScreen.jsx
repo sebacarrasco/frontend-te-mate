@@ -30,6 +30,9 @@ export const GamesIndexScreen = () => {
   if (error !== '') {
     return <Alert variant="danger">Ha ocurrido un error, vuelve a intentarlo recargando la página</Alert>;
   }
+  if (games.length === 0) {
+    return <p className="text-center">No hay juegos creados :(</p>;
+  }
 
   return (
     <Container fluid>
