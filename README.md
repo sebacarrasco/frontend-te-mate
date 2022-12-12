@@ -1,5 +1,5 @@
 # Frontend Te maté
-## Instructionsfor running in local environment
+## Instructions for running in local environment
 - `cp .env.example .env`.
 - Complete the environment variables in the `.env` file.
 - `yarn install`.
