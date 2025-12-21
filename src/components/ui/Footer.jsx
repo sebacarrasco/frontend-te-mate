@@ -12,12 +12,6 @@ export const Footer = () => (
   >
     <div className="text-center">
       <p className="text-secondary">
-        Made with
-        {' '}
-        <i className="fas fa-heart text-danger" />
-        {' '}
-        by
-        {' '}
         <a
           href="https://github.com/sebacarrasco"
           target="_blank"
