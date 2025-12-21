@@ -92,6 +92,12 @@ export const UserChallenges = ({ challenges, userId }) => {
 };
 
 UserChallenges.propTypes = {
-  challenges: PropTypes.arrayOf(PropTypes.object).isRequired,
+  challenges: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+      selected: PropTypes.bool,
+    }),
+  ).isRequired,
   userId: PropTypes.string.isRequired,
 };
