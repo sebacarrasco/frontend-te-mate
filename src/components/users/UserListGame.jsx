@@ -23,10 +23,14 @@ const renderUserStatus = (user, gameStatus) => {
 export const UserListGame = ({ users, adminId, gameStatus }) => {
   const navigate = useNavigate();
 
+  const sortedUsers = gameStatus === 'in progress'
+    ? [...users].sort((a, b) => b.gameUser.isAlive - a.gameUser.isAlive)
+    : users;
+
   return (
     <ListGroup variant="flush">
       {
-        users.map((user) => (
+        sortedUsers.map((user) => (
           <ListGroup.Item
             key={user.id}
             variant="light"
