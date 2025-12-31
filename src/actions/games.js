@@ -227,3 +227,36 @@ export const startDeletingGame = (gameId) => async (dispatch, getState) => {
   }
   dispatch(finishGameModalLoading());
 };
+
+export const startKillingUser = (gameId, userId) => async (dispatch, getState) => {
+  const { token } = getState().auth;
+  try {
+    await api.post(`games/${gameId}/users/${userId}/kill`, {}, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    Swal.fire('Usuario marcado como muerto', '', 'success');
+    dispatch(startGettingGame(gameId));
+  } catch (e) {
+    let message;
+    switch (e.response ? e.response.status : 0) {
+      case 404:
+        message = 'No se pudo encontrar el juego o el usuario';
+        break;
+      case 403:
+        message = 'No tienes permisos para realizar esta acción';
+        break;
+      case 401:
+        message = 'No estás autorizado para realizar esta acción';
+        break;
+      case 400:
+        message = 'Los datos ingresados no son válidos';
+        break;
+      default:
+        message = 'Ha ocurrido un error, por favor vuelve a intentarlo';
+        break;
+    }
+    Swal.fire(message, '', 'error');
+  }
+};

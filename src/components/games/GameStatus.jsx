@@ -1,26 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getGameStatusTranslation } from '../../utils';
 
 export const GameStatus = ({ status }) => {
-  if (status === 'setup') {
-    return (
-      <>
-        <i className="fas fa-cog" />
-        {' '}
-        En preparación
-        {' '}
-        <i className="fas fa-cog" />
-      </>
-    );
-  }
-
+  const translation = getGameStatusTranslation(status);
+  const icon = {
+    setup: <i className="fas fa-cog" />,
+    'in progress': <i className="fas fa-play-circle" />,
+    completed: <i className="fas fa-check-circle" />,
+  }[status];
   return (
     <>
-      <i className="fas fa-play-circle" />
+      {icon}
       {' '}
-      En progreso
+      {translation}
       {' '}
-      <i className="fas fa-play-circle" />
+      {icon}
     </>
   );
 };

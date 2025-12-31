@@ -1,9 +1,13 @@
 import React from 'react';
 import {
-  Badge, Col, ListGroup, Row,
+  Badge, Col, Dropdown, ListGroup, Row,
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
+import { startKillingUser } from '../../actions/games';
+import { useAuth } from '../../hooks/useAuth';
 
 const renderUserStatus = (user, gameStatus) => {
   if (gameStatus === 'in progress') {
@@ -20,12 +24,35 @@ const renderUserStatus = (user, gameStatus) => {
   );
 };
 
-export const UserListGame = ({ users, adminId, gameStatus }) => {
+export const UserListGame = ({
+  users, adminId, gameStatus, gameId,
+}) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userId } = useAuth();
+  const isAdmin = userId === adminId;
 
   const sortedUsers = gameStatus === 'in progress'
     ? [...users].sort((a, b) => b.gameUser.isAlive - a.gameUser.isAlive)
     : users;
+
+  const handleKillUser = (e, user) => {
+    e.stopPropagation();
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `¿Quieres marcar a ${user.firstName} ${user.lastName} como muerto?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, marcar como muerto',
+      cancelButtonText: 'Cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(startKillingUser(gameId, user.id));
+      }
+    });
+  };
 
   return (
     <ListGroup variant="flush">
@@ -34,30 +61,56 @@ export const UserListGame = ({ users, adminId, gameStatus }) => {
           <ListGroup.Item
             key={user.id}
             variant="light"
-            className="mt-2 rounded"
+            className="mt-2 rounded px-1"
             action
             onClick={() => navigate(`/users/${user.id}`)}
           >
             <div className="d-flex justify-content-between align-items-center">
-              <div className="ms-2 me-auto">
-                <div className="fw-bold text-black">{`${user.firstName} ${user.lastName}`}</div>
-                {user.email}
-              </div>
-              <div>
-                <Row className="mb-2">
-                  {renderUserStatus(user, gameStatus)}
-                </Row>
+              <div className="d-flex align-items-center">
                 {
-                  user.id === adminId
+                  isAdmin && gameStatus === 'in progress' && user.gameUser.isAlive
                     ? (
-                      <Col className="d-flex align-items-center justify-content-center">
-                        <Row>
-                          <i className="fas fa-user-tie p-0" />
-                        </Row>
-                      </Col>
+                      <Dropdown onClick={(e) => e.stopPropagation()}>
+                        <Dropdown.Toggle
+                          variant="link"
+                          className="text-dark p-0"
+                          id={`dropdown-${user.id}`}
+                          bsPrefix="dropdown-toggle-no-caret"
+                        >
+                          <i className="fas fa-ellipsis-v" />
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item onClick={(e) => handleKillUser(e, user)}>
+                            <i className="fas fa-skull-crossbones me-2 text-danger" />
+                            Marcar como muerto
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
                     )
                     : null
                 }
+                <div className="ms-2 me-auto">
+                  <div className="fw-bold text-black">{`${user.firstName} ${user.lastName}`}</div>
+                  {user.email}
+                </div>
+              </div>
+              <div className="d-flex align-items-center">
+                <div>
+                  <Row className="mb-2">
+                    {renderUserStatus(user, gameStatus)}
+                  </Row>
+                  {
+                    user.id === adminId
+                      ? (
+                        <Col className="d-flex align-items-center justify-content-center">
+                          <Row>
+                            <i className="fas fa-user-tie p-0" />
+                          </Row>
+                        </Col>
+                      )
+                      : null
+                  }
+                </div>
               </div>
             </div>
           </ListGroup.Item>
@@ -81,6 +134,7 @@ UserListGame.propTypes = {
   })).isRequired,
   adminId: PropTypes.string,
   gameStatus: PropTypes.string.isRequired,
+  gameId: PropTypes.string.isRequired,
 };
 
 UserListGame.defaultProps = {
