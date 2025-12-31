@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  Alert, Badge, Container, Tab, Tabs,
+  Alert, Container, Tab, Tabs,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -58,13 +58,14 @@ export const GameShowScreen = () => {
       >
         <Tab
           eventKey="participants"
+          tabClassName="text-black"
           title={(
             <>
               Participantes
               {' '}
-              <Badge bg="success" pill>
-                {game.participants.length}
-              </Badge>
+              (
+              {game.participants.length}
+              )
             </>
           )}
         >
@@ -73,7 +74,7 @@ export const GameShowScreen = () => {
         {
           game.status === 'in progress'
             ? (
-              <Tab eventKey="victim" title="Víctima">
+              <Tab eventKey="victim" title="Víctima" tabClassName="text-black">
                 <UserCard user={game.victim} />
                 <ChallengeCard challenge={game.challenge.description} />
               </Tab>
@@ -86,6 +87,7 @@ export const GameShowScreen = () => {
               <Tab
                 eventKey="admin"
                 title={<i className="fas fa-user-tie fa-lg" />}
+                tabClassName="text-black"
               >
                 <GameAdminTab game={game} />
               </Tab>
