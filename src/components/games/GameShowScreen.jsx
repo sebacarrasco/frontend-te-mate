@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import {
-  Alert, Badge, Container, Tab, Tabs,
+  Alert, Container, Tab, Tabs,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -62,9 +62,9 @@ export const GameShowScreen = () => {
             <>
               Participantes
               {' '}
-              <Badge bg="success" pill>
-                {game.participants.length}
-              </Badge>
+              (
+              {game.participants.length}
+              )
             </>
           )}
         >
