@@ -33,6 +33,15 @@ export const GamesIndexScreen = () => {
   if (games.length === 0) {
     return <p className="text-center">No hay juegos creados :(</p>;
   }
+  const getIconByStatus = (status) => {
+    if (status === 'setup') {
+      return <i className="fas fa-cog" />;
+    }
+    if (status === 'in progress') {
+      return <i className="fas fa-play-circle" />;
+    }
+    return <i className="fas fa-check-circle" />;
+  };
 
   return (
     <Container fluid>
@@ -64,12 +73,8 @@ export const GamesIndexScreen = () => {
                     <Col>
                       {game.name}
                     </Col>
-                    <Col xs={2} className="d-flex align-items-center">
-                      {
-                        game.status === 'setup'
-                          ? <i className="fas fa-cogs" />
-                          : <i className="fas fa-play" />
-                      }
+                    <Col xs={2} className="d-flex align-items-center justify-content-end">
+                      {getIconByStatus(game.status)}
                     </Col>
                   </Row>
                 </ListGroup.Item>

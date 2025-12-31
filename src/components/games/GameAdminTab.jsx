@@ -15,6 +15,7 @@ import { useForm } from '../../hooks/useForm';
 import { startUpdatingGameName } from '../../actions/games';
 import { openGameModal } from '../../actions/ui';
 import { GameConfirmationModal } from './GameConfirmationModal';
+import { getGameStatusTranslation } from '../../utils';
 
 export const GameAdminTab = () => {
   const dispatch = useDispatch();
@@ -78,18 +79,12 @@ export const GameAdminTab = () => {
         </Card>
         <Card className="mb-3">
           <Card.Header>
-            {
-              game.status === 'setup'
-                ? <i className="fas fa-cog" />
-                : <i className="fas fa-play-circle" />
-            }
-            {' '}
             Estado del juego
           </Card.Header>
           <Card.Body>
             <Row>
               <Col>
-                {game.status === 'setup' ? 'En preparación' : 'En progreso' }
+                {getGameStatusTranslation(game.status)}
               </Col>
               {
                 game.status === 'setup'
