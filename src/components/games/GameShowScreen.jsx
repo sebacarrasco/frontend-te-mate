@@ -68,7 +68,7 @@ export const GameShowScreen = () => {
             </>
           )}
         >
-          <UserListGame users={game.participants} adminId={game.ownerId} />
+          <UserListGame users={game.participants} adminId={game.ownerId} gameStatus={game.status} />
         </Tab>
         {
           game.status === 'in progress'
