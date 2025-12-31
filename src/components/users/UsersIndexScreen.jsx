@@ -5,7 +5,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { startGettingUsers } from '../../actions/users';
 import { Loading } from '../ui/Loading';
-import { UserList } from './UserList';
+import { UserListIndex } from './UserListIndex';
 
 export const UsersIndexScreen = () => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ export const UsersIndexScreen = () => {
       <p>Haz click sobre un usuario para ir a su perfil</p>
       <Row>
         <Col>
-          <UserList users={users} mode="usersIndex" />
+          <UserListIndex users={users} />
         </Col>
       </Row>
     </Container>

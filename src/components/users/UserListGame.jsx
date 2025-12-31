@@ -5,7 +5,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-export const UserList = ({ users, mode, adminId }) => {
+export const UserListGame = ({ users, adminId }) => {
   const navigate = useNavigate();
 
   return (
@@ -24,29 +24,24 @@ export const UserList = ({ users, mode, adminId }) => {
                 <div className="fw-bold text-black">{`${user.firstName} ${user.lastName}`}</div>
                 {user.email}
               </div>
-              {
-                mode === 'game'
-                  ? (
-                    <div>
-                      <Row className="mb-2">
-                        <Badge bg={user.challengesNotSelected < 2 ? 'danger' : 'primary'} pill>
-                          {user.challengesNotSelected}
-                        </Badge>
-                      </Row>
-                      {
-                        user.id === adminId
-                          ? (
-                            <Col className="d-flex align-items-center justify-content-center">
-                              <Row>
-                                <i className="fas fa-user-tie p-0" />
-                              </Row>
-                            </Col>
-                          )
-                          : null
-                      }
-                    </div>
-                  ) : null
-              }
+              <div>
+                <Row className="mb-2">
+                  <Badge bg={user.challengesNotSelected < 2 ? 'danger' : 'primary'} pill>
+                    {user.challengesNotSelected}
+                  </Badge>
+                </Row>
+                {
+                  user.id === adminId
+                    ? (
+                      <Col className="d-flex align-items-center justify-content-center">
+                        <Row>
+                          <i className="fas fa-user-tie p-0" />
+                        </Row>
+                      </Col>
+                    )
+                    : null
+                }
+              </div>
             </div>
           </ListGroup.Item>
         ))
@@ -55,17 +50,17 @@ export const UserList = ({ users, mode, adminId }) => {
   );
 };
 
-UserList.propTypes = {
+UserListGame.propTypes = {
   users: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     firstName: PropTypes.string.isRequired,
     lastName: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
+    challengesNotSelected: PropTypes.number.isRequired,
   })).isRequired,
-  mode: PropTypes.string.isRequired,
   adminId: PropTypes.string,
 };
 
-UserList.defaultProps = {
+UserListGame.defaultProps = {
   adminId: '',
 };
