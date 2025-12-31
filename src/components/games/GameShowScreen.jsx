@@ -9,7 +9,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { ChallengeCard } from '../challenges/ChallengeCard';
 import { Loading } from '../ui/Loading';
 import { UserCard } from '../users/UserCard';
-import { UserList } from '../users/UserList';
+import { UserListGame } from '../users/UserListGame';
 import { GameAdminTab } from './GameAdminTab';
 import { GameStatus } from './GameStatus';
 
@@ -68,7 +68,7 @@ export const GameShowScreen = () => {
             </>
           )}
         >
-          <UserList users={game.participants} mode="game" adminId={game.ownerId} />
+          <UserListGame users={game.participants} adminId={game.ownerId} gameStatus={game.status} />
         </Tab>
         {
           game.status === 'in progress'
