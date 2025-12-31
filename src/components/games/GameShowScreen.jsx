@@ -77,7 +77,7 @@ export const GameShowScreen = () => {
           />
         </Tab>
         {
-          game.status === 'in progress'
+          game.status === 'in progress' && game.isUserAlive
             ? (
               <Tab eventKey="victim" title="Víctima" tabClassName="text-black">
                 <UserCard user={game.victim} />
