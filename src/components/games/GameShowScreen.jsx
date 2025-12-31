@@ -58,6 +58,7 @@ export const GameShowScreen = () => {
       >
         <Tab
           eventKey="participants"
+          tabClassName="text-black"
           title={(
             <>
               Participantes
@@ -73,7 +74,7 @@ export const GameShowScreen = () => {
         {
           game.status === 'in progress'
             ? (
-              <Tab eventKey="victim" title="Víctima">
+              <Tab eventKey="victim" title="Víctima" tabClassName="text-black">
                 <UserCard user={game.victim} />
                 <ChallengeCard challenge={game.challenge.description} />
               </Tab>
@@ -86,6 +87,7 @@ export const GameShowScreen = () => {
               <Tab
                 eventKey="admin"
                 title={<i className="fas fa-user-tie fa-lg" />}
+                tabClassName="text-black"
               >
                 <GameAdminTab game={game} />
               </Tab>
