@@ -10,7 +10,7 @@ import { startKillingUser } from '../../actions/games';
 import { useAuth } from '../../hooks/useAuth';
 
 const renderUserStatus = (user, gameStatus) => {
-  if (gameStatus === 'in progress') {
+  if (gameStatus !== 'setup') {
     const badgeStyle = { minWidth: '55px', display: 'inline-block', textAlign: 'center' };
     if (user.gameUser.isAlive) {
       return <small><Badge bg="success" pill style={badgeStyle}>Vivo</Badge></small>;
@@ -32,7 +32,7 @@ export const UserListGame = ({
   const { userId } = useAuth();
   const isAdmin = userId === adminId;
 
-  const sortedUsers = gameStatus === 'in progress'
+  const sortedUsers = gameStatus !== 'setup'
     ? [...users].sort((a, b) => b.gameUser.isAlive - a.gameUser.isAlive)
     : users;
 
