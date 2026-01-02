@@ -10,6 +10,7 @@ import { ChallengeCard } from '../challenges/ChallengeCard';
 import { Loading } from '../ui/Loading';
 import { UserCard } from '../users/UserCard';
 import { UserListGame } from '../users/UserListGame';
+import { GameActivityTab } from './GameActivityTab';
 import { GameAdminTab } from './GameAdminTab';
 import { GameStatus } from './GameStatus';
 
@@ -82,6 +83,15 @@ export const GameShowScreen = () => {
               <Tab eventKey="victim" title="Víctima" tabClassName="text-black">
                 <UserCard user={game.victim} />
                 <ChallengeCard challenge={game.challenge.description} />
+              </Tab>
+            )
+            : null
+        }
+        {
+          game.status !== 'setup'
+            ? (
+              <Tab eventKey="activity" title="Actividad" tabClassName="text-black" mountOnEnter>
+                <GameActivityTab gameId={gameId} />
               </Tab>
             )
             : null
