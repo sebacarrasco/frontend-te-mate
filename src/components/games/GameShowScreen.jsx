@@ -55,14 +55,14 @@ export const GameShowScreen = () => {
       </div>
       <Tabs
         defaultActiveKey="participants"
-        className="mb-3"
+        className="mb-3 font-nowrap"
       >
         <Tab
           eventKey="participants"
           tabClassName="text-black"
           title={(
             <>
-              Participantes
+              <i className="fas fa-users fa-lg" />
               {' '}
               (
               {game.participants.length}
@@ -91,7 +91,11 @@ export const GameShowScreen = () => {
           game.status !== 'setup'
             ? (
               <Tab eventKey="activity" title="Actividad" tabClassName="text-black" mountOnEnter>
-                <GameActivityTab gameId={gameId} />
+                <GameActivityTab
+                  gameId={gameId}
+                  isUserAlive={game.isUserAlive}
+                  gameStatus={game.status}
+                />
               </Tab>
             )
             : null
