@@ -230,6 +230,14 @@ export const startDeletingGame = (gameId) => async (dispatch, getState) => {
 
 export const startKillingUser = (gameId, userId) => async (dispatch, getState) => {
   const { token } = getState().auth;
+  Swal.fire({
+    title: 'Procesando...',
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    didOpen: () => {
+      Swal.showLoading();
+    },
+  });
   try {
     await api.post(`games/${gameId}/users/${userId}/kill`, {}, {
       headers: {
